@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng 20/10 - Yêu Em Nhiều!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Hiệu ứng hoa rơi */
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .petal {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #ff6b8b;
+            border-radius: 50% 0 50% 0;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container chính */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #d63384;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: #6f42c1;
+            font-weight: 300;
+        }
+
+        /* Khung ảnh */
+        .photo-frame {
+            width: 90%;
+            max-width: 500px;
+            margin: 40px auto;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .photo-frame:hover {
+            transform: rotateY(5deg);
+        }
+
+        .frame {
+            position: relative;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff6b8b, #c51162);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transform: rotate(-2deg);
+        }
+
+        .frame::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #c51162, #880e4f);
+            border-radius: 25px;
+            z-index: -1;
+            transform: rotate(2deg);
+        }
+
+        .photo-container {
+            width: 100%;
+            padding-bottom: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .photo-frame:hover .photo {
+            transform: scale(1.05);
+        }
+
+        /* Nút upload ảnh */
+        .upload-btn {
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            width: 50px;
+            height: 50px;
+            background: #ff4081;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            z-index: 3;
+        }
+
+        .upload-btn:hover {
+            background: #d81b60;
+            transform: scale(1.1);
+        }
+
+        #photo-upload {
+            display: none;
+        }
+
+        /* Lời chúc */
+        .message {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .message h2 {
+            color: #d63384;
+            margin-bottom: 20px;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+        }
+
+        .message p {
+            color: #495057;
+            line-height: 1.8;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            margin-bottom: 15px;
+        }
+
+        .heart-icon {
+            color: #ff4081;
+            font-size: 1.5rem;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+
+        /* Nút hành động */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff4081, #d81b60);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.4);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(216, 27, 96, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #6f42c1;
+            font-size: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .photo-frame {
+                width: 85%;
+            }
+            
+            .message {
+                padding: 20px;
+                margin: 30px auto;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 80%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .frame {
+                padding: 10px;
+            }
+            
+            .message p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hiệu ứng hoa rơi -->
+    <div class="petals" id="petals"></div>
+
+    <div class="container">
+        <header>
+            <h1>Chúc Em Yêu Ngày 20/10 Vui Vẻ</h1>
+            <p class="subtitle">Gửi đến người con gái anh yêu thương nhất!</p>
+        </header>
+
+        <!-- Khung ảnh -->
+        <div class="photo-frame">
+            <div class="frame">
+                <div class="photo-container">
+                    <img src="img.jpg" alt="Ảnh người yêu" class="photo" id="photo">
+                </div>
+            </div>
+            <label for="photo-upload" class="upload-btn">
+                <i class="fas fa-camera"></i>
+            </label>
+            <input type="file" id="photo-upload" accept="image/*">
+        </div>
+
+        <!-- Lời chúc -->
+        <div class="message">
+            <h2>Gửi Em Yêu! <i class="fas fa-heart heart-icon"></i></h2>
+            <p>
+                Hôm nay là ngày đặc biệt để tôn vinh những người phụ nữ tuyệt vời, và trong trái tim anh, 
+                em chính là một trong những người phụ nữ tuyệt vời nhất sau má mi. Cảm ơn em đã đến bên anh, mang theo nắng ấm và hạnh phúc.
+            </p>
+            <p>
+                Anh không có gì để tặng em bé cả, tại anh không có cách nào để tặng em bé món quà thực tế.
+                Chỉ có món quà tinh thần này để tặng cho em bé của anh thuii, mong em bé vui vẻ nhận nó.
+                Anh chúc em bé luôn xinh đẹp, rạng rỡ, mạnh khỏe và thành công trong mọi việc. 
+                Mong rằng mỗi ngày em bé đều sống trong niềm vui và hạnh phúc, 
+                và anh sẽ luôn là người đồng hành cùng em bé trên mọi nẻo đường.
+            </p>
+            <p>
+                Yêu em rất nhiều! <i class="fas fa-heart heart-icon"></i>
+            </p>
+        </div>
+
+        <!-- Nút hành động -->
+        <div class="action-buttons">
+            <button class="btn" id="play-music">
+                <i class="fas fa-music"></i> Nghe Nhạc
+            </button>
+            <button class="btn" id="show-love">
+                <i class="fas fa-heart"></i> Bấm liên tục đây nè
+            </button>
+        </div>
+
+        <footer>
+            <p>© Tạo bởi Đức Thanh người yêu em</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tạo hiệu ứng hoa rơi
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            
+            // Vị trí ngẫu nhiên
+            petal.style.left = Math.random() * 100 + '%';
+            
+            // Kích thước ngẫu nhiên
+            const size = Math.random() * 10 + 10;
+            petal.style.width = size + 'px';
+            petal.style.height = size + 'px';
+            
+            // Thời gian rơi ngẫu nhiên
+            const duration = Math.random() * 5 + 5;
+            petal.style.animationDuration = duration + 's';
+            
+            // Màu sắc ngẫu nhiên
+            const colors = ['#ff6b8b', '#ff4081', '#c51162', '#ad1457', '#880e4f'];
+            petal.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.getElementById('petals').appendChild(petal);
+            
+            // Xóa hoa khi rơi xong
+            setTimeout(() => {
+                petal.remove();
+            }, duration * 1000);
+        }
+
+        // Tạo hoa liên tục
+        setInterval(createPetal, 300);
+
+        // Upload ảnh
+        document.getElementById('photo-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('photo').src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Nút nghe nhạc
+        document.getElementById('play-music').addEventListener('click', function() {
+            alert('Chúc mừng 20/10 em yêu! Anh không có nhạc ở đây hì, em bé hãy bật một bài hát để thư giãn nhéee! ❤️');
+        });
+
+        // Nút thể hiện tình cảm
+        document.getElementById('show-love').addEventListener('click', function() {
+            // Tạo hiệu ứng trái tim bay
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = '100%';
+                    heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                    heart.style.zIndex = '1000';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.animation = 'float-up 3s forwards';
+                    
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        });
+
+        // Thêm animation cho trái tim bay
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float-up {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
